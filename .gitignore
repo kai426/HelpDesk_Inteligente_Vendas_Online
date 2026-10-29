@@ -1,0 +1,12 @@
+# NUNCA suba a chave da API
+.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Uploads de teste
+uploads/*
+!uploads/.gitkeep
