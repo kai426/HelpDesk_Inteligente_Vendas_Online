@@ -1,0 +1,153 @@
+mensagem,categoria,prioridade
+Não consigo entrar na minha conta,login,media
+Esqueci minha senha e não consigo logar,login,media
+Minha senha não está funcionando,login,media
+O site diz que meu login está incorreto,login,media
+Não recebo o email para redefinir a senha,login,media
+Minha conta foi bloqueada depois de tentar entrar,login,media
+Como faço login com o Google?,login,media
+Tento acessar minha conta mas fica carregando,login,media
+nao consigo fazer login de jeito nenhum,login,media
+"quero recuperar meu acesso, esqueci a senha",login,media
+o codigo de verificacao nao chega pra eu entrar,login,media
+login dando erro toda vez que coloco minha senha,login,media
+"Perdi acesso à minha conta, como recupero?",login,media
+A autenticação de dois fatores não está chegando,login,media
+Entrei com a senha certa e mesmo assim nao loga,login,media
+Como faço para criar uma conta?,cadastro,baixa
+Não consigo finalizar meu cadastro,cadastro,baixa
+O site não aceita meu CPF no cadastro,cadastro,baixa
+Meu email já está cadastrado e não sei por quê,cadastro,baixa
+Quero atualizar meus dados cadastrais,cadastro,baixa
+Como mudo meu endereço no cadastro?,cadastro,baixa
+Preciso trocar meu número de telefone na conta,cadastro,baixa
+o formulario de cadastro nao envia,cadastro,baixa
+nao recebo o email de confirmacao do cadastro,cadastro,baixa
+quero me cadastrar mas da erro no CEP,cadastro,baixa
+Como altero meu nome no perfil?,cadastro,baixa
+"Meu cadastro ficou incompleto, como termino?",cadastro,baixa
+Posso ter duas contas com o mesmo email?,cadastro,baixa
+Erro ao salvar meus dados pessoais,cadastro,baixa
+nao consigo concluir o registro no app,cadastro,baixa
+Esse produto tem garantia?,produto,baixa
+Qual a voltagem desse aparelho?,produto,baixa
+Esse notebook vem com carregador?,produto,baixa
+Quais as dimensões do produto?,produto,baixa
+Esse tênis tem no tamanho 42?,produto,baixa
+Qual a diferença entre esses dois modelos?,produto,baixa
+O produto é original?,produto,baixa
+quero saber a cor desse celular,produto,baixa
+esse produto serve para qual uso?,produto,baixa
+tem manual em portugues?,produto,baixa
+De que material é feito esse item?,produto,baixa
+Esse produto é compatível com meu aparelho?,produto,baixa
+Qual a capacidade dessa geladeira?,produto,baixa
+vem quantas unidades na caixa?,produto,baixa
+esse monitor tem quantas polegadas,produto,baixa
+Esse produto está disponível?,estoque,media
+Quando vai voltar ao estoque?,estoque,media
+O item que eu quero está esgotado,estoque,media
+Tem em estoque na cor azul?,estoque,media
+Vocês vão repor esse produto?,estoque,media
+Avisa quando chegar mais unidades?,estoque,media
+esse tamanho ta disponivel ainda?,estoque,media
+quero saber se ainda tem em estoque,estoque,media
+"o produto sumiu do site, acabou?",estoque,media
+tem previsao de reposicao desse item?,estoque,media
+Ainda há unidades disponíveis para compra?,estoque,media
+esgotou bem na hora que eu ia comprar,estoque,media
+quantas pecas ainda tem no estoque,estoque,media
+"esse modelo esta indisponivel, vai voltar?",estoque,media
+"preciso de 10 unidades, tem no estoque?",estoque,media
+Adicionei um produto mas sumiu do carrinho,carrinho,media
+Não consigo adicionar itens ao carrinho,carrinho,media
+Meu carrinho esvaziou sozinho,carrinho,media
+O botão de adicionar ao carrinho não funciona,carrinho,media
+Quero remover um item do carrinho,carrinho,media
+O carrinho não atualiza a quantidade,carrinho,media
+coloquei no carrinho e nao salvou,carrinho,media
+"meu carrinho ta travado, nao deixa mexer",carrinho,media
+o valor no carrinho esta errado,carrinho,media
+nao consigo mudar a quantidade no carrinho,carrinho,media
+Os itens que escolhi não aparecem no carrinho,carrinho,media
+carrinho some quando eu troco de pagina,carrinho,media
+da erro quando tento ir pro carrinho,carrinho,media
+quero juntar dois produtos no mesmo carrinho,carrinho,media
+o frete no carrinho nao esta calculando,carrinho,media
+Paguei via Pix mas o pedido continua aguardando pagamento,pagamento,alta
+Meu pagamento no cartão foi recusado,pagamento,alta
+Gerei o boleto mas não consigo pagar,pagamento,alta
+O site cobrou duas vezes no meu cartão,pagamento,alta
+Fiz o pagamento e não foi confirmado,pagamento,alta
+Como parcelo no cartão de crédito?,pagamento,alta
+o pix caiu mas o sistema nao reconheceu,pagamento,alta
+paguei o boleto e ainda consta como pendente,pagamento,alta
+meu cartao foi negado sem motivo,pagamento,alta
+fui cobrado mas o pedido nao foi aprovado,pagamento,alta
+Posso pagar com dois cartões?,pagamento,alta
+o pagamento ficou processando e nao sai disso,pagamento,alta
+cobraram um valor diferente do que estava no site,pagamento,alta
+paguei via pix e nao recebi confirmacao nenhuma,pagamento,alta
+"meu boleto venceu, consigo gerar outro?",pagamento,alta
+o checkout nao aceita meu cartao de credito,pagamento,alta
+Meu cupom de desconto não funciona,cupom,baixa
+Onde coloco o código do cupom?,cupom,baixa
+O cupom aparece como inválido,cupom,baixa
+Esse cupom ainda está valendo?,cupom,baixa
+Apliquei o cupom mas o preço não mudou,cupom,baixa
+O cupom expirou antes do prazo?,cupom,baixa
+meu cupom nao da desconto nenhum,cupom,baixa
+o campo de cupom nao aceita meu codigo,cupom,baixa
+ganhei um cupom mas nao sei usar,cupom,baixa
+o desconto do cupom nao apareceu no total,cupom,baixa
+Posso usar dois cupons na mesma compra?,cupom,baixa
+cupom dando erro na hora de pagar,cupom,baixa
+esse produto aceita cupom de desconto?,cupom,baixa
+digitei o cupom certo e diz que é invalido,cupom,baixa
+o cupom some quando finalizo a compra,cupom,baixa
+Quero ver o status do meu pedido,pedido,media
+Onde acompanho meu pedido?,pedido,media
+Meu pedido ainda não foi confirmado,pedido,media
+Qual o número do meu pedido?,pedido,media
+Fiz um pedido e não recebi email nenhum,pedido,media
+Meu pedido está como em separação há dias,pedido,media
+quero saber se meu pedido foi aprovado,pedido,media
+nao encontro meu pedido no site,pedido,media
+meu pedido consta como processando ainda,pedido,media
+"fiz o pedido errado, queria conferir",pedido,media
+Preciso alterar o endereço do meu pedido,pedido,media
+o historico de pedidos nao esta carregando,pedido,media
+meu pedido sumiu da minha conta,pedido,media
+quero o comprovante do meu pedido,pedido,media
+quando meu pedido vai ser separado?,pedido,media
+Meu pedido está atrasado na entrega,entrega,alta
+Quero rastrear minha encomenda,entrega,alta
+O código de rastreio não atualiza,entrega,alta
+A entrega não chegou no prazo,entrega,alta
+O produto chegou danificado,entrega,alta
+Recebi o produto errado,entrega,alta
+quando meu pedido vai ser entregue?,entrega,alta
+o rastreamento esta parado faz dias,entrega,alta
+minha entrega esta muito atrasada,entrega,alta
+o entregador nao encontrou meu endereco,entrega,alta
+Qual a previsão de entrega do meu pedido?,entrega,alta
+"a encomenda foi devolvida, e agora?",entrega,alta
+meu produto nao chegou ainda e ja passou do prazo,entrega,alta
+nao recebi minha compra e o prazo venceu,entrega,alta
+como mudo o endereco de entrega?,entrega,alta
+o rastreio diz entregue mas eu nao recebi,entrega,alta
+Quero cancelar meu pedido,cancelamento,critica
+Como faço para cancelar a compra?,cancelamento,critica
+"Pedi por engano, quero cancelar",cancelamento,critica
+Preciso cancelar e pedir reembolso,cancelamento,critica
+Comprei errado e quero cancelar agora,cancelamento,critica
+Como solicito o estorno do valor?,cancelamento,critica
+quero devolver o produto e receber meu dinheiro,cancelamento,critica
+cancelei mas nao recebi o reembolso,cancelamento,critica
+da pra cancelar antes de enviar?,cancelamento,critica
+"quero desistir da compra, como cancelo?",cancelamento,critica
+"Me arrependi da compra, quero o dinheiro de volta",cancelamento,critica
+"preciso cancelar urgente, comprei o item errado",cancelamento,critica
+como funciona o reembolso de um cancelamento?,cancelamento,critica
+quero cancelar a assinatura e ser reembolsado,cancelamento,critica
+"pedido duplicado, preciso cancelar um deles",cancelamento,critica
