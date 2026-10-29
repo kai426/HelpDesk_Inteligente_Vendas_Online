@@ -1,0 +1,25 @@
+MÉTRICAS DO MODELO DE CATEGORIA (Fase 1)
+==================================================
+Base: 152 chamados, 10 categorias.
+Treino: 121 exemplos | Teste: 31 exemplos
+
+Acurácia no conjunto de teste: 70.97%
+
+Relatório por classe:
+              precision    recall  f1-score   support
+
+    cadastro       0.50      0.33      0.40         3
+cancelamento       0.75      1.00      0.86         3
+    carrinho       0.60      1.00      0.75         3
+       cupom       1.00      0.67      0.80         3
+     entrega       1.00      0.50      0.67         4
+     estoque       0.50      0.67      0.57         3
+       login       1.00      0.67      0.80         3
+   pagamento       1.00      0.67      0.80         3
+      pedido       0.60      1.00      0.75         3
+     produto       0.67      0.67      0.67         3
+
+    accuracy                           0.71        31
+   macro avg       0.76      0.72      0.71        31
+weighted avg       0.77      0.71      0.70        31
+
