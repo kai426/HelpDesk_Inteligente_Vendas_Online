@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HelpDesk Inteligente — Fase 1</title>
+  <title>HelpDesk Inteligente — Fases 1 e 2</title>
   <style>
     :root { --azul:#1a5fb4; --azul2:#2b7de9; --bg:#f3f5f9; --card:#fff; --txt:#1f2430; --borda:#dde3ec; }
     * { box-sizing: border-box; }
@@ -11,52 +11,102 @@
     header { background:linear-gradient(135deg,var(--azul),var(--azul2)); color:#fff; padding:24px 20px; }
     header h1 { margin:0 0 4px; font-size:22px; }
     header p { margin:0; opacity:.9; font-size:14px; }
-    main { max-width:720px; margin:22px auto; padding:0 16px 48px; }
-    .card { background:var(--card); border:1px solid var(--borda); border-radius:14px; padding:22px; }
-    h2 { margin:0 0 4px; font-size:17px; }
-    .desc { margin:0 0 16px; font-size:13px; color:#5b6472; }
+    .status { display:inline-block; margin-top:10px; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:600; }
+    .on { background:#d7f5dd; color:#126b2e; }
+    .off { background:#ffe2c7; color:#8a4b00; }
+    main { max-width:760px; margin:20px auto; padding:0 16px 48px; }
+    .tabs { display:flex; gap:8px; margin-bottom:16px; }
+    .tab { flex:1; padding:10px; border:1px solid var(--borda); background:var(--card); border-radius:10px; cursor:pointer; font-weight:600; text-align:center; }
+    .tab.active { background:var(--azul); color:#fff; border-color:var(--azul); }
+    .painel { display:none; background:var(--card); border:1px solid var(--borda); border-radius:14px; padding:20px; }
+    .painel.active { display:block; }
+    .painel h2 { margin:0 0 4px; font-size:17px; }
+    .painel .desc { margin:0 0 16px; font-size:13px; color:#5b6472; }
     label { display:block; font-size:13px; font-weight:600; margin:12px 0 5px; }
-    textarea { width:100%; padding:10px; border:1px solid var(--borda); border-radius:9px; font-size:14px; font-family:inherit; min-height:84px; resize:vertical; }
-    button { margin-top:16px; background:var(--azul); color:#fff; border:none; padding:11px 22px; border-radius:9px; font-size:15px; font-weight:600; cursor:pointer; }
-    button:hover { background:#154c93; }
+    textarea { width:100%; padding:10px; border:1px solid var(--borda); border-radius:9px; font-size:14px; font-family:inherit; min-height:80px; resize:vertical; }
+    button.enviar { margin-top:16px; background:var(--azul); color:#fff; border:none; padding:11px 20px; border-radius:9px; font-size:15px; font-weight:600; cursor:pointer; }
+    button.enviar:hover { background:#154c93; }
     .saida { margin-top:18px; background:#0f1626; color:#d6e2ff; padding:14px; border-radius:10px; font-size:13px; white-space:pre-wrap; word-break:break-word; display:none; }
     .saida.show { display:block; }
-    .exemplos { margin-top:14px; font-size:12px; color:#5b6472; }
-    .exemplos span { display:inline-block; background:#eef3fb; border:1px solid var(--borda); border-radius:999px; padding:3px 10px; margin:3px 4px 0 0; cursor:pointer; }
+    .bloco-resposta { margin-top:16px; padding:14px; background:#f0f7ee; border:1px solid #cfe6c4; border-radius:10px; font-size:14px; white-space:pre-wrap; display:none; }
+    .bloco-resposta.show { display:block; }
+    .bloco-resposta b { color:#2a6a16; }
   </style>
 </head>
 <body>
   <header>
-    <h1>🤖 HelpDesk Inteligente — Fase 1</h1>
-    <p>Classificação da dúvida com Machine Learning (TF-IDF + Naive Bayes)</p>
+    <h1>🤖 HelpDesk Inteligente</h1>
+    <p>Fase 1 (Machine Learning) + Fase 2 (resposta com LLM Gemini)</p>
+    {% if llm_ok %}
+      <span class="status on">● Gemini conectado</span>
+    {% else %}
+      <span class="status off">● Modo fallback (configure o .env para usar o Gemini)</span>
+    {% endif %}
   </header>
+
   <main>
-    <div class="card">
-      <h2>Classificar dúvida do cliente</h2>
-      <p class="desc">O modelo identifica a <b>categoria</b>, define a <b>prioridade</b> e sugere uma <b>resposta base</b>.</p>
-      <label>Mensagem do cliente</label>
-      <textarea id="msg">Paguei via Pix mas meu pedido continua aguardando pagamento</textarea>
-      <div class="exemplos">
-        Exemplos (clique para usar):
-        <span onclick="usar(this)">Esqueci minha senha e não consigo entrar</span>
-        <span onclick="usar(this)">Meu cupom não funciona</span>
-        <span onclick="usar(this)">Meu pedido está atrasado</span>
-        <span onclick="usar(this)">Quero cancelar e pedir reembolso</span>
-      </div>
-      <button onclick="classificar()">Classificar</button>
-      <div class="saida" id="out"></div>
+    <div class="tabs">
+      <div class="tab active" data-alvo="f1">Fase 1 · Classificar</div>
+      <div class="tab" data-alvo="f2">Fase 2 · Atender</div>
     </div>
+
+    <!-- FASE 1 -->
+    <section class="painel active" id="f1">
+      <h2>Fase 1 — Classificação com Machine Learning</h2>
+      <p class="desc">Identifica categoria, prioridade e resposta base da dúvida.</p>
+      <label>Mensagem do cliente</label>
+      <textarea id="f1-msg">Paguei via Pix mas meu pedido continua aguardando pagamento</textarea>
+      <button class="enviar" onclick="classificar()">Classificar</button>
+      <div class="saida" id="f1-out"></div>
+    </section>
+
+    <!-- FASE 2 -->
+    <section class="painel" id="f2">
+      <h2>Fase 2 — Resposta humanizada com LLM</h2>
+      <p class="desc">Classifica e gera uma resposta cordial, passo a passo, com o Gemini.</p>
+      <label>Mensagem do cliente</label>
+      <textarea id="f2-msg">Meu cupom não funciona na hora de pagar</textarea>
+      <button class="enviar" onclick="atender()">Atender</button>
+      <div class="bloco-resposta" id="f2-resp"></div>
+      <div class="saida" id="f2-out"></div>
+    </section>
   </main>
+
   <script>
-    function usar(el){ document.getElementById('msg').value = el.textContent; }
+    document.querySelectorAll('.tab').forEach(t => {
+      t.onclick = () => {
+        document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+        document.querySelectorAll('.painel').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        document.getElementById(t.dataset.alvo).classList.add('active');
+      };
+    });
+
     async function classificar() {
-      const out = document.getElementById('out');
+      const out = document.getElementById('f1-out');
       out.textContent = 'Processando...'; out.classList.add('show');
       const r = await fetch('/classificar', {
         method: 'POST', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ mensagem: document.getElementById('msg').value })
+        body: JSON.stringify({ mensagem: document.getElementById('f1-msg').value })
       });
       out.textContent = JSON.stringify(await r.json(), null, 2);
+    }
+
+    async function atender() {
+      const resp = document.getElementById('f2-resp');
+      const out = document.getElementById('f2-out');
+      resp.classList.remove('show');
+      out.textContent = 'Processando... (a LLM pode levar alguns segundos)'; out.classList.add('show');
+      const r = await fetch('/atender', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ mensagem: document.getElementById('f2-msg').value })
+      });
+      const dados = await r.json();
+      if (dados.resposta_cliente) {
+        resp.innerHTML = '<b>Resposta ao cliente:</b>\n\n' + dados.resposta_cliente;
+        resp.classList.add('show');
+      }
+      out.textContent = JSON.stringify(dados, null, 2);
     }
   </script>
 </body>
