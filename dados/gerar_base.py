@@ -22,8 +22,7 @@ SAIDA = os.path.join(PASTA, "chamados.csv")
 
 # ---------------------------------------------------------------------------
 # Prioridade típica de cada categoria.
-# (A prioridade NÃO é prevista por ML: é uma regra derivada da categoria,
-#  espelhada em servicos/classificador.py.)
+# (Na Fase 1 também treinamos um classificador de prioridade a partir disto.)
 # ---------------------------------------------------------------------------
 PRIORIDADE_POR_CATEGORIA = {
     "login": "media",
