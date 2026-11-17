@@ -1,0 +1,86 @@
+{
+  "1001": {
+    "numero_pedido": "1001",
+    "cliente": "João Silva",
+    "produto": "Notebook Dell Inspiron 15",
+    "status_pedido": "aguardando pagamento",
+    "status_pagamento": "pendente",
+    "metodo_pagamento": "Pix",
+    "status_entrega": "não enviado",
+    "valor": 3499.90
+  },
+  "1002": {
+    "numero_pedido": "1002",
+    "cliente": "Maria Oliveira",
+    "produto": "Fone de Ouvido Bluetooth JBL",
+    "status_pedido": "em separação",
+    "status_pagamento": "aprovado",
+    "metodo_pagamento": "Cartão de crédito",
+    "status_entrega": "não enviado",
+    "valor": 299.90
+  },
+  "1003": {
+    "numero_pedido": "1003",
+    "cliente": "Carlos Souza",
+    "produto": "Cafeteira Expresso Nespresso",
+    "status_pedido": "enviado",
+    "status_pagamento": "aprovado",
+    "metodo_pagamento": "Boleto",
+    "status_entrega": "em transporte",
+    "codigo_rastreio": "BR123456789BR",
+    "valor": 649.00
+  },
+  "1004": {
+    "numero_pedido": "1004",
+    "cliente": "Ana Pereira",
+    "produto": "Smartphone Samsung Galaxy A54",
+    "status_pedido": "entregue",
+    "status_pagamento": "aprovado",
+    "metodo_pagamento": "Pix",
+    "status_entrega": "entregue",
+    "codigo_rastreio": "BR987654321BR",
+    "valor": 1899.00
+  },
+  "1005": {
+    "numero_pedido": "1005",
+    "cliente": "Pedro Santos",
+    "produto": "Monitor LG 27 polegadas",
+    "status_pedido": "atrasado",
+    "status_pagamento": "aprovado",
+    "metodo_pagamento": "Cartão de crédito",
+    "status_entrega": "atrasado",
+    "codigo_rastreio": "BR555444333BR",
+    "valor": 1250.00
+  },
+  "1006": {
+    "numero_pedido": "1006",
+    "cliente": "Juliana Lima",
+    "produto": "Teclado Mecânico Redragon",
+    "status_pedido": "cancelado",
+    "status_pagamento": "estornado",
+    "metodo_pagamento": "Cartão de crédito",
+    "status_entrega": "cancelado",
+    "valor": 320.00
+  },
+  "1007": {
+    "numero_pedido": "1007",
+    "cliente": "Rafael Costa",
+    "produto": "Cadeira Gamer ThunderX3",
+    "status_pedido": "pagamento recusado",
+    "status_pagamento": "recusado",
+    "metodo_pagamento": "Cartão de crédito",
+    "status_entrega": "não enviado",
+    "valor": 1099.00
+  },
+  "1008": {
+    "numero_pedido": "1008",
+    "cliente": "Beatriz Almeida",
+    "produto": "Impressora HP DeskJet",
+    "status_pedido": "entregue",
+    "status_pagamento": "aprovado",
+    "metodo_pagamento": "Pix",
+    "status_entrega": "entregue com avaria",
+    "codigo_rastreio": "BR111222333BR",
+    "valor": 459.90
+  }
+}
