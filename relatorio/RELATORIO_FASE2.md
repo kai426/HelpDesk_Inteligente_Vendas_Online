@@ -7,33 +7,35 @@
 Na Fase 1, o sistema já identifica a **categoria**, a **prioridade** e uma **resposta
 base** da dúvida do cliente. O problema é que a resposta base é um texto fixo, sempre
 igual. O objetivo da Fase 2 é usar uma **LLM (modelo de linguagem)** para transformar
-esse contexto em uma resposta mais **humana, cordial e em passos numerados**, adaptada à
-mensagem do cliente.
+esse contexto em uma resposta mais **humana, cordial e em passos numerados**, adaptada
+à mensagem do cliente.
 
 ## 2. Qual LLM foi usada e por quê
 
-Escolhemos o **Google Gemini** (modelo `gemini-2.5-flash`). Motivos práticos:
+Escolhemos o **Google Gemini**, modelo `gemini-2.5-flash`. Motivos:
 
-1. A API do Gemini tem **camada gratuita** (com limite de requisições), o que é adequado
-   para um projeto de estudo e dispensa cadastro de pagamento. (Havíamos começado com o
-   DeepSeek, mas ele exige pagamento para uso da API.)
-2. Usamos o **SDK oficial** (`google-genai`), com uma interface simples: um prompt de
-   sistema (`system_instruction`) separado do conteúdo do usuário.
-3. O modelo é configurável pela variável `GEMINI_MODEL` no `.env`, então dá para trocar
-   de versão sem alterar o código.
+1. Tem **nível gratuito** no Google AI Studio, o que viabiliza um projeto de estudo
+   sem custo.
+2. É **multimodal** (aceita texto e imagem no mesmo pedido). Isso não é usado na Fase 2,
+   mas é essencial na Fase 3 — então usar o mesmo modelo nas duas fases simplifica
+   bastante o projeto.
+
+> Observação: inicialmente testamos outras opções (OpenAI e DeepSeek), mas ambas exigiam
+> pagamento para liberar a API. O Gemini foi escolhido por atender ao requisito técnico
+> (geração de texto e, depois, leitura de imagem) dentro do plano gratuito.
 
 Trecho central da integração (`servicos/llm.py`):
 
 ```python
 from google import genai
-from google.genai import types
+from google.genai import types as genai_types
 
 cliente = genai.Client(api_key=GEMINI_API_KEY)
 
 resposta = cliente.models.generate_content(
     model="gemini-2.5-flash",
-    contents=conteudo_usuario,
-    config=types.GenerateContentConfig(
+    contents=prompt,
+    config=genai_types.GenerateContentConfig(
         system_instruction=INSTRUCAO_SISTEMA,
         temperature=0.4,
     ),
@@ -56,12 +58,11 @@ faz o que faz de melhor.
 ## 4. Como controlamos o que a LLM responde
 
 Esse é o ponto mais importante da fase. Uma LLM "solta" pode inventar informação ou
-prometer coisas que a empresa não cumpre. Para evitar isso, usamos várias camadas de
-controle:
+prometer coisas que a empresa não cumpre. Para evitar isso, usamos várias camadas:
 
 - **Prompt de sistema (regras fixas):** definimos que ela deve falar em português, com
   tom cordial, responder em passos e — principalmente — **nunca prometer** prazos,
-  reembolsos ou descontos que não estejam no contexto. Se faltar informação, ela deve
+  reembolsos ou descontos que não estejam no contexto. Se faltar informação, deve
   orientar o cliente a procurar um atendente humano.
 - **Contexto controlado:** enviamos à LLM apenas o que o sistema já sabe (categoria,
   prioridade, resposta base). Ela não busca dados por conta própria nem toma decisões.
@@ -77,30 +78,23 @@ Entrada:
 { "mensagem": "Paguei via Pix mas meu pedido continua aguardando pagamento" }
 ```
 
-A Fase 1 classifica como `categoria=pagamento`, `prioridade=alta`. A Fase 2 (Gemini)
-gera algo como:
+A Fase 1 classifica como `categoria=pagamento`, `prioridade=alta`. A Fase 2 gera algo como:
 
 ```
 1. Olá! Entendo a sua preocupação com o pagamento, vou te ajudar.
 2. Pagamentos via Pix costumam ser confirmados em alguns minutos; às vezes há um pequeno atraso.
 3. Verifique na sua conta, em "Meus Pedidos", se o status já mudou para "pago".
-4. Se depois de alguns minutos continuar como "aguardando pagamento", responda esta
-   mensagem que um atendente vai verificar o seu caso.
+4. Se continuar como "aguardando pagamento", responda esta mensagem que um atendente
+   vai verificar o seu caso.
 ```
 
-Repare que a resposta é cordial e em passos, mas **não promete** prazo exato nem
-confirma o pagamento — exatamente como as regras pedem.
+Repare que a resposta é cordial e em passos, mas **não promete** prazo exato nem confirma
+o pagamento — exatamente como as regras pedem.
 
-> No relatório, inclua um print da resposta real gerada na sua máquina (pode variar a cada
-> execução, pois a LLM reescreve o texto).
+> No relatório, inclua um print da resposta real gerada na sua máquina (o texto varia a
+> cada execução, pois a LLM reescreve).
 
-## 6. Segurança da chave de API
-
-A chave do Gemini fica **apenas** no arquivo `.env`, que é ignorado pelo Git
-(`.gitignore`). Ela nunca aparece no código. Se a chave vazar, basta gerar uma nova no
-Google AI Studio (https://aistudio.google.com/apikey) e apagar a antiga.
-
-## 7. Perguntas de reflexão (Fase 2)
+## 6. Perguntas de reflexão (Fase 2)
 
 **A LLM deve decidir sozinha?**
 Não. No nosso sistema, a LLM recebe o contexto e apenas redige a resposta. Quem classifica
@@ -116,9 +110,9 @@ A Fase 1 **classifica** (escolhe um rótulo entre categorias fixas) — é deter
 rápida. A Fase 2 **gera texto** (produz uma resposta nova em linguagem natural) — é mais
 flexível, porém precisa de controle. As duas se complementam.
 
-## 8. Conclusão
+## 7. Conclusão
 
 A Fase 2 adiciona a camada de linguagem natural ao HelpDesk: o sistema deixa de responder
 com um texto fixo e passa a conversar de forma mais humana, sem abrir mão do controle. A
 combinação "ML classifica + LLM redige + regras no código" é segura e escalável, e serve
-de base para a Fase 3, que vai acrescentar a análise de imagem e a consulta de pedidos.
+de base para a Fase 3.

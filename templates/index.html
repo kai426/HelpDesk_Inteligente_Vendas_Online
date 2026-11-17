@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HelpDesk Inteligente — Fases 1 e 2</title>
+  <title>HelpDesk Inteligente</title>
   <style>
     :root { --azul:#1a5fb4; --azul2:#2b7de9; --bg:#f3f5f9; --card:#fff; --txt:#1f2430; --borda:#dde3ec; }
     * { box-sizing: border-box; }
@@ -14,16 +14,17 @@
     .status { display:inline-block; margin-top:10px; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:600; }
     .on { background:#d7f5dd; color:#126b2e; }
     .off { background:#ffe2c7; color:#8a4b00; }
-    main { max-width:760px; margin:20px auto; padding:0 16px 48px; }
-    .tabs { display:flex; gap:8px; margin-bottom:16px; }
-    .tab { flex:1; padding:10px; border:1px solid var(--borda); background:var(--card); border-radius:10px; cursor:pointer; font-weight:600; text-align:center; }
+    main { max-width:800px; margin:20px auto; padding:0 16px 48px; }
+    .tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+    .tab { flex:1; min-width:130px; padding:10px; border:1px solid var(--borda); background:var(--card); border-radius:10px; cursor:pointer; font-weight:600; text-align:center; }
     .tab.active { background:var(--azul); color:#fff; border-color:var(--azul); }
     .painel { display:none; background:var(--card); border:1px solid var(--borda); border-radius:14px; padding:20px; }
     .painel.active { display:block; }
     .painel h2 { margin:0 0 4px; font-size:17px; }
     .painel .desc { margin:0 0 16px; font-size:13px; color:#5b6472; }
     label { display:block; font-size:13px; font-weight:600; margin:12px 0 5px; }
-    textarea { width:100%; padding:10px; border:1px solid var(--borda); border-radius:9px; font-size:14px; font-family:inherit; min-height:80px; resize:vertical; }
+    input[type=text], textarea { width:100%; padding:10px; border:1px solid var(--borda); border-radius:9px; font-size:14px; font-family:inherit; }
+    textarea { min-height:80px; resize:vertical; }
     button.enviar { margin-top:16px; background:var(--azul); color:#fff; border:none; padding:11px 20px; border-radius:9px; font-size:15px; font-weight:600; cursor:pointer; }
     button.enviar:hover { background:#154c93; }
     .saida { margin-top:18px; background:#0f1626; color:#d6e2ff; padding:14px; border-radius:10px; font-size:13px; white-space:pre-wrap; word-break:break-word; display:none; }
@@ -31,16 +32,21 @@
     .bloco-resposta { margin-top:16px; padding:14px; background:#f0f7ee; border:1px solid #cfe6c4; border-radius:10px; font-size:14px; white-space:pre-wrap; display:none; }
     .bloco-resposta.show { display:block; }
     .bloco-resposta b { color:#2a6a16; }
+    .chamado { margin-top:12px; padding:10px 14px; border-radius:9px; font-size:13px; font-weight:600; display:none; }
+    .chamado.show { display:block; }
+    .chamado.abriu { background:#fde9e9; border:1px solid #f3c0c0; color:#8d2222; }
+    .chamado.nao { background:#eef3fb; border:1px solid var(--borda); color:#3a4a63; }
+    .dica { font-size:12px; color:#5b6472; margin-top:6px; }
   </style>
 </head>
 <body>
   <header>
     <h1>🤖 HelpDesk Inteligente</h1>
-    <p>Fase 1 (Machine Learning) + Fase 2 (resposta com LLM Gemini)</p>
+    <p>Machine Learning + Gemini — atendimento para loja online</p>
     {% if llm_ok %}
       <span class="status on">● Gemini conectado</span>
     {% else %}
-      <span class="status off">● Modo fallback (configure o .env para usar o Gemini)</span>
+      <span class="status off">● Modo fallback (coloque sua chave no .env para usar o Gemini)</span>
     {% endif %}
   </header>
 
@@ -48,6 +54,7 @@
     <div class="tabs">
       <div class="tab active" data-alvo="f1">Fase 1 · Classificar</div>
       <div class="tab" data-alvo="f2">Fase 2 · Atender</div>
+      <div class="tab" data-alvo="f3">Fase 3 · Completo</div>
     </div>
 
     <!-- FASE 1 -->
@@ -70,6 +77,24 @@
       <div class="bloco-resposta" id="f2-resp"></div>
       <div class="saida" id="f2-out"></div>
     </section>
+
+    <!-- FASE 3 -->
+    <section class="painel" id="f3">
+      <h2>Fase 3 — Atendimento completo</h2>
+      <p class="desc">Texto + número do pedido + imagem. O sistema consulta o pedido, analisa a imagem, decide se abre chamado e gera a resposta final.</p>
+      <label>Mensagem do cliente</label>
+      <textarea id="f3-msg">Paguei via Pix mas meu pedido continua aguardando pagamento</textarea>
+      <label>Número do pedido</label>
+      <input type="text" id="f3-pedido" value="1001">
+      <p class="dica">Pedidos de teste: 1001 a 1008 (cada um em uma situação diferente)</p>
+      <label>Imagem do erro (opcional)</label>
+      <input type="file" id="f3-img" accept="image/png,image/jpeg,image/webp">
+      <p class="dica">Há um print de exemplo em <code>exemplos/erro_pagamento.png</code></p>
+      <button class="enviar" onclick="atenderCompleto()">Enviar atendimento completo</button>
+      <div class="chamado" id="f3-chamado"></div>
+      <div class="bloco-resposta" id="f3-resp"></div>
+      <div class="saida" id="f3-out"></div>
+    </section>
   </main>
 
   <script>
@@ -82,31 +107,64 @@
       };
     });
 
+    function carregando(id, texto) {
+      const el = document.getElementById(id);
+      el.textContent = texto || 'Processando...';
+      el.classList.add('show');
+    }
+
     async function classificar() {
-      const out = document.getElementById('f1-out');
-      out.textContent = 'Processando...'; out.classList.add('show');
+      carregando('f1-out');
       const r = await fetch('/classificar', {
         method: 'POST', headers: {'Content-Type':'application/json'},
         body: JSON.stringify({ mensagem: document.getElementById('f1-msg').value })
       });
-      out.textContent = JSON.stringify(await r.json(), null, 2);
+      document.getElementById('f1-out').textContent = JSON.stringify(await r.json(), null, 2);
     }
 
     async function atender() {
       const resp = document.getElementById('f2-resp');
-      const out = document.getElementById('f2-out');
       resp.classList.remove('show');
-      out.textContent = 'Processando... (a LLM pode levar alguns segundos)'; out.classList.add('show');
+      carregando('f2-out', 'Processando... (a LLM pode levar alguns segundos)');
       const r = await fetch('/atender', {
         method: 'POST', headers: {'Content-Type':'application/json'},
         body: JSON.stringify({ mensagem: document.getElementById('f2-msg').value })
       });
-      const dados = await r.json();
-      if (dados.resposta_cliente) {
-        resp.innerHTML = '<b>Resposta ao cliente:</b>\n\n' + dados.resposta_cliente;
+      const d = await r.json();
+      if (d.resposta_cliente) {
+        resp.innerHTML = '<b>Resposta ao cliente:</b>\n\n' + d.resposta_cliente;
         resp.classList.add('show');
       }
-      out.textContent = JSON.stringify(dados, null, 2);
+      document.getElementById('f2-out').textContent = JSON.stringify(d, null, 2);
+    }
+
+    async function atenderCompleto() {
+      const resp = document.getElementById('f3-resp');
+      const cham = document.getElementById('f3-chamado');
+      resp.classList.remove('show');
+      cham.classList.remove('show');
+      carregando('f3-out', 'Processando... (analisando imagem e gerando resposta)');
+
+      const fd = new FormData();
+      fd.append('mensagem', document.getElementById('f3-msg').value);
+      fd.append('numero_pedido', document.getElementById('f3-pedido').value);
+      const img = document.getElementById('f3-img').files[0];
+      if (img) fd.append('imagem', img);
+
+      const r = await fetch('/atender-completo', { method: 'POST', body: fd });
+      const d = await r.json();
+
+      if (d.chamado) {
+        cham.textContent = d.chamado.aberto
+          ? '🎫 Chamado aberto: ' + d.chamado.numero_chamado + ' — ' + d.chamado.motivo
+          : '✅ Nenhum chamado aberto — ' + d.chamado.motivo;
+        cham.className = 'chamado show ' + (d.chamado.aberto ? 'abriu' : 'nao');
+      }
+      if (d.resposta_cliente) {
+        resp.innerHTML = '<b>Resposta ao cliente:</b>\n\n' + d.resposta_cliente;
+        resp.classList.add('show');
+      }
+      document.getElementById('f3-out').textContent = JSON.stringify(d, null, 2);
     }
   </script>
 </body>
